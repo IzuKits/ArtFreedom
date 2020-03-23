@@ -1,0 +1,34 @@
+.picture{
+    position: absolute;
+    background-color: seagreen;
+    margin: 1.7rem;
+    height: 10.2rem;
+    width: 80%;
+    overflow: hidden;
+}
+.block_with_picture{
+    position: relative;
+    display: inline-block;
+    margin: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    width: 17rem;
+    height: 17rem;
+    box-shadow: 0 10px 10px rgba(2, 4, 41, 0.281);
+    background-color: rgba(153, 172, 255, 0.253);
+    border-radius: 10px;
+}
+.block_with_text{
+    position: absolute;
+    height: 4.25rem;
+    width: 80%;
+    display: block;
+    margin: 1.7rem;
+    margin-top: 12.5rem;
+}
+img.type_1{
+    width: 100%;
+}
+img.type_2{
+    height: 100%;
+}
