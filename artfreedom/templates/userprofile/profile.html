@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Профиль{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/text.css' %}">
+{% endblock %}
+{% block main_content %}
+{% if username %}
+<main class="profile">
+
+    <div class="avatar">
+        <img src="{% if avatar_url %}
+            {{ avatar_url }}
+        {% else %}
+            {% static 'imgs/default_avatar.jpg' %}
+        {% endif %}
+        " alt="{{username}}'s avatar">
+    </div>
+    <header>
+        <h2 class="heading2">{{username}}</h2>
+    </header>
+    <section >
+        <p>Контакты: {{ contacts }}</p>
+        <p>Принято участие в челленджах: {{col_challenges}}</p>
+        <p>Статус: {{ status }}</p>
+        {% if ismyprofile %}
+        <a href="{% url 'logout' %}" class="logout_button">Разлогиниться</a>
+        <a href="{% url 'userprofile:add_new_challenge' %}" class="logout_button" id = "add_challenge">Создать челлендж</a>
+        {% endif %}
+    </section>
+    <figure class="challenges_gallary clearfix">
+        <figcaption>Активные челленджи</figcaption>
+        {% for ch in  challenges%}
+        {% if ch.active %}
+        <a href='{% url 'challenge' ch.challenge.id %}'>{{ch.challenge}}</a>
+        {% endif %}
+        {% endfor %}
+    </figure>
+    <figure class="challenges_gallary clearfix">
+        <figcaption>Законченные челленджи</figcaption>
+        {% for ch in  challenges%}
+        {% if not ch.active %}
+        <a href='{% url 'challenge' ch.challenge.id %}'>{{ch.challenge}}</a>
+        {% endif %}
+        {% endfor %}
+    </figure>
+    {% else %}
+    <main>
+        <section class="login_block">
+            <h2 class="heading2">Упс, кажется, вы не еще вошли в аккаунт</h2>
+            <a href="{% url 'login' %}" class="logout_button">Залогиниться</a>
+        </section>
+    </main>
+</main>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+</script>
+{% endblock %}

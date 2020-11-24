@@ -1,0 +1,28 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %}FAQ{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/text.css' %}">{% endblock %}
+
+
+{% block main_content %}
+<main>
+    <nav class="nav-left-bar">
+        <ul>
+            <li><a href="#a1" class="nav-left-bar-button">Как это работает?</a></li>
+            <li><a href="#a2" class="nav-left-bar-button">Как создать челлендж?</a></li>
+            <li><a href="#a3" class="nav-left-bar-button">Почему после добавления челлендж не появился в катлоге?</a></li>
+            <li><a href="#a4" class="nav-left-bar-button">Как помочь проекту?</a></li>
+        </ul>
+    </nav>
+    <section class="main-block">
+        <h2 class="heading2" id="a1"> Как это работает?</h2>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+        <p>a</p>
+        <h2 class="heading2" id="a2"> Как создать челлендж?</h2>
+        <h2 class="heading2" id="a3"> Почему после добавления челлендж не появился в катлоге?</h2>
+        <h2 class="heading2" id="a4"> Как помочь проекту?</h2>
+
+    </section>
+</main>
+{% endblock %}

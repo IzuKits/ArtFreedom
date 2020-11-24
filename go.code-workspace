@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "artfreedom/static/css"
+		},
+		{
+			"path": "artfreedom/apps/loginsys"
+		},
+		{
+			"path": "artfreedom/apps/userprofile"
+		},
+		{
+			"path": "artfreedom/templates"
+		},
+		{
+			"path": "artfreedom/apps/main"
+		}
+	],
+	"settings": {}
+}

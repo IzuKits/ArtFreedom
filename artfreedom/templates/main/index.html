@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %}Главная{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/index.css' %}">{% endblock %}
+
+{% block main_content %}
+<main class="index">
+    <div class="wrapper">
+        <div class="ad">
+            Лучший арт будет помещен на главную страницу сайта на 1 месяц!
+            <p>Автор этого арта:</p>
+            <a href="#">kto-to</a>
+        </div>
+        <div class="index__counter1">
+            <p>1000</p>
+            <p>Активных челленджей</p>
+        </div>
+        <div class="index__counter2">
+            <p>10000</p>
+            <p>Загруженных изображений</p>
+        </div>
+        <div class="index__counter3 ">
+            <a href="{% url 'helper' %}" class="help_link">Как это работает?</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

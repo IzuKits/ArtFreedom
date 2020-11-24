@@ -1,0 +1,50 @@
+.form_wrapper{
+    display: block;
+    width: 40%;
+    margin: 4rem auto;
+    padding: 1rem;
+} 
+.form_wrapper form > *{
+    font-size: 1.5rem;
+    display: block;
+    text-align: center;
+}
+.form_wrapper form > label{
+}
+.form_wrapper form > input{
+    margin: 0.7rem auto;
+}
+
+
+/* BUTTON */
+.log_button{
+    background-color: rgb(14, 63, 42);
+    border-radius: 0.5rem;
+    margin: 1rem;
+    padding: 0.7rem;
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    border: 1px rgba(14, 63, 42, 0) solid;
+}
+.log_button:hover{
+    background-color: white;
+    border: 1px rgb(14, 63, 42) solid;
+    color: black;
+    transition-duration: 200ms;
+    cursor: pointer;
+}
+
+#registration_form label{
+    font-size: 1.1rem;
+}
+
+#registration_form div{
+    font-size: 1.1rem;
+    display: block;
+    border: 1px solid red;
+    background-color: rgba(255, 0, 0, 0.192);
+    padding: 0.5em;
+    color: rgb(124, 0, 0);
+    display: none;
+}

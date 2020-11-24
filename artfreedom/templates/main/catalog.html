@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Каталог челленджей{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">{% endblock %}
+{% block main_content %}
+<main>
+    <nav>
+        <a href="#">chotot</a>
+        <a href="#">chototo2</a>
+        <a href="#">chototo3</a>
+        <a href="#">chototo4</a>
+    </nav>
+    <section>
+        {% for ch in latest_challenges_list%}
+        <article class="challenge_article" {% if  ch.avatar %} style="background-image: url('{{ ch.avatar }}');"
+            {% endif %}>
+            <header><a href="{% url 'challenge' ch.id %}">{{ ch.name }}</a> </header>
+            <article>
+                <p>Дата начала челленджa: <time>{{ ch.start_date }}</time></p>
+                <p>Длительность: {{ ch.recruitment_time }} дней</p>
+                <p>Количество зарегестрированных участников: {{ ch.users_count }}</p>
+                <p>Статус: <span class="{{ ch.challenge_status_en }}">{{ ch.challenge_status }}</span></p>
+            </article>
+        </article>
+        {% endfor %}
+        <div id="pagination">
+            <ul>
+                <li id="first">1</li>
+                <li id="prev">Назад</li>
+                <li id="current_page">{{ page.current_page }}</li>
+                <li id="next">Вперед</li>
+                <li id="last">{{ page.last_page }}</li>
+            </ul>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts%}
+<script>
+    loc = location.protocol + '//' + location.host + location.pathname
+    current_page = document.getElementById("current_page").innerHTML
+    last_page = document.getElementById("last").innerHTML
+
+    if (current_page == 1) {
+        document.getElementById("prev").classList.add("deactive_page_button")
+    }
+    else {
+        document.getElementById("prev").onclick = function () {
+            document.location.href = loc + '?page=' + --current_page
+        }
+    }
+    if (current_page == last_page){
+        document.getElementById("next").classList.add("deactive_page_button")
+    }
+    else{
+        document.getElementById("next").onclick = function () {
+            document.location.href = loc + '?page=' + ++current_page
+        }
+    }
+    document.getElementById("first").onclick = function () {
+        document.location.href = loc
+    }
+    document.getElementById("last").onclick = function () {
+        document.location.href = loc + '?page=' + last_page
+    }
+</script>
+{% endblock %}

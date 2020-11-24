@@ -1,0 +1,91 @@
+.clearfix{
+    clear: both;
+}
+
+
+div.avatar{
+    width: 10rem;
+    height: 10rem;
+    background-color: blue;
+    float: left;
+    margin: 2rem;
+    border: 1px black solid;
+}
+div.avatar > img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+main.profile{
+    display: block;
+    padding: 2rem;
+    white-space: normal;
+}
+main > section{
+    padding: 1rem;
+}
+main > section,
+main > header{
+    display: block;
+    margin: 0.5rem 0;
+}
+a.logout_button{
+    background-color: rgb(14, 63, 42);
+    border-radius: 0.5rem;
+    margin: 1rem;
+    padding: 0.7rem;
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    border: 1px rgba(14, 63, 42, 0) solid;
+}
+a.logout_button:hover{
+    background-color: white;
+    border: 1px rgb(14, 63, 42) solid;
+    color: black;
+    transition-duration: 200ms;
+}
+
+/* GALLARY */
+.img_gallary{
+    margin: 0;
+    padding: 1rem;
+}
+.img_gallary > figcaption,
+.challenges_gallary > figcaption{
+    font-size: 1.3rem;
+    margin: 0;
+    border-bottom: 1px black solid;
+}
+
+.gallary_image{
+    background-color: blueviolet;
+    width: 7rem;
+    height: 7rem;
+    display: inline-block;
+    margin:5px;
+}
+.challenges_gallary{
+    margin: 0;
+    padding: 1rem;
+}
+.challenges_gallary > a{
+    padding: 0.5rem;
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+.challenges_gallary > a:hover{
+    background-color:rgb(196, 218, 208);
+    transition-duration: 300ms;
+}
+
+/* Error login */
+.login_block{
+    margin: 10% auto;
+    text-align: center;
+}
+
+#new_avatar_button{
+    text-align: center;
+}

@@ -1,0 +1,71 @@
+main.index{
+    background-image: url(../imgs/index_background1.jpg),
+    linear-gradient(180deg, rgba(6, 21, 63, 0), rgb(15, 0, 66));
+    width: 100%;
+    height: calc(100vh - 4rem);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+
+} 
+main > .wrapper{
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: 2rem 1fr 1fr 1fr 1fr 2rem;
+    grid-template-rows:  2rem 2fr 1fr 2rem;
+
+    grid-template-areas: 
+    "b b b b b b"
+    "b2 a a a ad b3"
+    "b2 a1 a2 a3 a4 b3"
+    "b4 b4 b4 b4 b4 b4";
+}
+.wrapper{
+    font-size: 1.5rem;
+    color: rgb(255, 255, 255);
+}
+div.ad{
+    grid-area: ad;
+    padding: 1rem;
+    color: rgb(255, 255, 255);
+}
+
+div.index__counter1,
+div.index__counter2,
+div.index__counter3{
+    border-top: 1px white solid;
+    border-bottom: 1px white solid;
+    text-align: center;
+}
+div.index__counter1{
+    grid-area: a1;
+}
+div.index__counter2{
+    grid-area: a2;
+}
+div.index__counter3{
+    grid-area: a3;
+}
+div.index__counter3:before{
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.help_link:active,
+.help_link{
+    text-decoration: none;
+    display: inline-block;
+    color: white;
+    vertical-align: middle;
+    border-radius: 5px;
+    border: 1px rgb(255, 255, 255) solid;
+    padding: 0.5rem;
+}
+.help_link:hover{
+    background-color: rgba(255, 255, 255, 0.363);
+    transition-duration: 200ms;
+}
+

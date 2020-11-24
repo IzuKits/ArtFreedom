@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Новый челлендж{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/text.css' %}">
+<link rel="stylesheet" href="{% static 'css/newchallenge.css' %}">
+
+{% endblock %}
+{% block main_content %}
+<main>
+    <form method="POST" action="/profile/newchallenge/" enctype="multipart/form-data">
+    {% csrf_token %}
+        <label for="id_article_title">Название челленджа</label>
+        <input type="text" name="article_title" maxlength="200" required id="id_article_title">
+        <label for="id_article_description">Описание (кратко опишите суть конкурса)</label>
+        <textarea name="article_description" cols="40" rows="10" required id="id_article_description"></textarea>
+        <label for="id_start_date">Дата начала челленджа</label>
+        <input type="date" min={% now 'Y-m-d' %} name="start_date"required id="id_start_date">
+        <label for="id_recruitment_time">Длительность конкурса (в днях)</label>
+        <input type="number" name="recruitment_time" min=1 required id="id_recruitment_time">
+        <label for="file">Аватар для челленджа</label>
+        {{model.image}}
+        <button type="submit">Создать</button>
+    </form>
+</main>
+{% endblock %}

@@ -1,0 +1,133 @@
+/*  MAIN PART  */
+main{
+    display: flex;
+    align-items: flex-start;
+}
+main section{
+    flex-grow: 1;
+    padding: 1rem;
+}
+main nav{
+    width: 20%;
+    padding: 1rem;
+    border-right: 1px rgb(7, 36, 27) solid;
+}
+main > nav > a:nth-child(2n){
+    background-color: rgba(197, 228, 209, 0.308);
+}
+main > nav > a{
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: black;
+    border: 1px rgba(0, 0, 0, 0) solid;
+
+}
+main > nav > a:hover{
+    border: 1px black solid;
+    transition-duration: 200ms;
+}
+/*  CHALLENGE ARTICLE  */
+
+article.challenge_article{
+    margin: 1rem 0;
+    padding: 0.5rem;
+    border-top: 1px black solid;
+    background-image: url("../imgs/default_challenge_img.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+/*article.challenge_article:first-child, article.challenge_article:last-child
+{
+      margin: 0;
+}
+*/
+
+.challenge_article > header{
+    font-size: 1.3em;
+    margin: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.815);
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+}
+.challenge_article > header:hover{
+    background-color: rgb(255, 255, 255);
+    transition-duration: 300ms;
+}
+.challenge_article > header > a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.challenge_article > header > a,
+.challenge_article > header > a:active{
+    text-decoration: none;
+    color: black;
+}
+.challenge_article > article{
+    margin: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.815);
+    padding: 0.5rem
+} 
+span.active,
+span.recruitment,
+span.finished
+{
+    padding: 0.3rem;
+    border-radius: 0.4rem;
+}
+span.active{
+    background-color: rgb(238, 255, 0);
+}
+span.finished{
+    background-color: rgb(128, 151, 156);
+}
+span.recruitment{
+    background-color: chartreuse;
+}
+div#pagination{
+    text-align: center;
+}
+div#pagination ul{
+    display: inline-block;
+    text-align: center;
+    list-style-type: none;
+    padding-left: 0em;
+}
+div#pagination ul li{
+    padding: 1em;
+    display: inline-block;
+}
+div#pagination ul li#first,
+div#pagination ul li#last,
+div#pagination ul li#next,
+div#pagination ul li#prev{
+    cursor: pointer;
+}
+div#pagination ul li#current_page{
+color: white;
+background-color: rgb(14, 63, 42);
+}
+
+div#pagination ul li#first:hover,
+div#pagination ul li#last:hover,
+div#pagination ul li#next:hover,
+div#pagination ul li#prev:hover{
+    background-color: rgb(128, 151, 156);
+    transition-duration: 300ms;
+}
+div#pagination ul li#first{
+    border-right: 1px solid black;
+}
+div#pagination ul li#last{
+    border-left: 1px solid black;
+}
+
+.deactive_page_button{
+    color: rgb(116, 116, 116);
+    cursor: none;
+}
+.deactive_page_button:hover{
+    background-color: rgba(255, 255, 255, 0) !important;
+}

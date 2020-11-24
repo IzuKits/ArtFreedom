@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Название челленджа{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/challenge.css' %}">
+<link rel="stylesheet" href="{% static 'css/text.css' %}">{% endblock %}
+
+
+{% block main_content %}
+<main>
+    <nav class="nav-left-bar">
+    {% if user.is_athenticated %}
+        {% if challenge_status == 'Идет набор'%}
+            <figure id="participate_button">
+                {% if isparticipated %}
+                <div class="select_challenge_button">
+                    <img src="{% static 'imgs/participate_ok.png' %}" alt="">
+                </div>
+                {% else %}
+                <div class="select_challenge_button">
+                    <img src="{% static 'imgs/participate.svg' %}" alt="">
+                </div>
+                <p>Участвовать</p>
+                {% endif %}
+            </figure>
+        {% else %}
+            <p>Набор окончен</p>
+        {% endif %}
+    {% else %}
+        <p>Для участия необходимо войти в аккаунт</p>
+    {% endif %}
+
+    </nav>
+    <section class="main-block">
+        <div class="challenge__img"><img src="{{avatar_url}}" alt="art"></div>
+        <h2 class="heading2" style="display: inline-block;">{{title}}</h2>
+        <p>Дата регистрации: {{pub_date}}</p>
+        <p>Дата начала: {{start_date}}</p>
+        <p>Длительность: {{recruitment_time}} дней</p>
+        <p>Статус: <span class="{{ challenge_status_en }}">{{ challenge_status }}</span></p>
+        <p>Организатор: <a href="{% url 'userprofile:profile' creator.user.id %}"> {{creator.user.username}}</a></p>
+        <p>Участники:
+            {% for i in participants%}
+                <a href="{% url 'userprofile:profile' creator.user.id %}">{{i.user.user.username}}, </a>
+            {% endfor %}
+        </p>
+        <p>Описание: {{description}}</p>
+    </section>
+</main>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% if not isparticipated %}
+<script>
+
+    add_button = document.getElementById("participate_button")
+    console.log(document)
+    add_button.onclick = function(){
+        result = confirm("Подтвердить участие в выбранном челлендже? (ОТменить действие будет невозможно)")
+        if (result){
+            $.ajax({
+                type: "GET",
+                url: "/challenge/participate/",
+                data: { challenge: "{{ id }}" }
+            }).done(function( msg ) {
+                location.reload()
+            });
+        }
+    };
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Регистрация{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'css/sing_page.css' %}">{% endblock %}
+{% block main_content %}
+<main>
+    <section class="form_wrapper">
+        <form action="/registration/" method="POST" id="registration_form">
+            {% csrf_token %}
+            <label for="id_login">Логин</label>
+            {{form.login}}
+            <div id='login_error'>Логин должен содержать только латинские буквы или цифры</div>
+            <label for="id_password">Пароль</label>
+            {{form.password}}
+            <div id='password_error'></div>
+            <label for="id_password2">Повторите пароль</label>
+            {{form.password2}}
+            <div id='password2_error'></div>
+            <label for="id_contact">E-mail или ссылка на соцсети (так с вами могут связаться другиме пользователи)</label>
+            {{form.contact}}
+            <div id='contacts'></div>
+            <input type="submit" value="Зарегестрироваться" class="log_button">
+        </form>
+    </section>
+</main>
+{% endblock %}
+{% block scripts %}
+<script>
+    is_login_valid = false
+    is_password_valid = false
+    is_password2_valid = false
+    is_contacts_valid = false 
+
+    elem_login = $('input[name=login]')
+    elem_password = $('#id_password')
+    elem_password2 = $('#id_password2')
+    elem_contact = $('#id_contact')
+
+    reg = "^[\da-zA-Z0-9]+$"
+    elem_login.change(validate_login)
+    elem_password.change(validate_password)
+    elem_password2.change(validate_password2)
+    elem_contact.change(validate_contacts)
+
+    $("#registration_form").submit(function(){
+        validate_login();
+        validate_password();
+        validate_contacts();
+        validate_password2();
+
+        is_login_valid = true
+        is_password_valid = true
+        is_password2_valid = true
+        is_contacts_valid = true 
+
+        if(is_login_valid&&is_password_valid&&is_password2_valid&&is_contacts_valid){
+            alert("true")
+            return true
+        }
+        else{
+            alert("false")
+            return false
+        }
+    }
+    )
+
+    function validate_login(){
+        if(elem_login.val() == 0){
+            $('#login_error').text("Поле не может быть пустым")
+            $('#login_error').slideDown(300)
+            is_login_valid = false
+        }
+        else if(elem_login.val().match(reg) == null){
+            $('#login_error').text("Логин должен содержать только латинские буквы или цифры")
+            $('#login_error').slideDown(300)
+            is_login_valid = false
+        }
+        else{
+            $('#login_error').slideUp(300)
+            is_login_valid = true
+        }
+    }
+     
+    function validate_password(){
+        if(elem_password.val() == 0){
+            $('#password_error').text("Поле не может быть пустым")
+            $('#password_error').slideDown(300)
+            is_password_valid = false
+        }
+        else if(elem_password.val().match(reg) == null){
+            $('#password_error').text("Пароль должен содержать только латинские буквы или цифры")
+            $('#password_error').slideDown(300)
+            is_password_valid = false
+        }
+        else if(elem_password.val().length < 8){
+            $('#password_error').text("Пароль должен быть не менее 8 символов")
+            $('#password_error').slideDown(300)
+            is_password_valid = false
+        }
+        else{
+            $('#password_error').slideUp(300)
+            is_password_valid = true
+        }
+    }
+    function validate_password2(){
+        if(elem_password2.val() == 0){
+            $('#password2_error').text("Поле не может быть пустым")
+            $('#password2_error').slideDown(300)
+            is_password2_valid = false
+        }
+        else if(elem_password2.val() != elem_password.val()){
+            $('#password2_error').text("Пароли не совпадают")
+            $('#password2_error').slideDown(300)
+            is_password2_valid = false
+        }
+        else{
+            $('#password2_error').slideUp(300)
+            is_password2_valid = true
+        }
+    }
+    function validate_contacts(){
+        if(elem_contact.val() == 0){
+            $('#contacts').text("Поле не может быть пустым")
+            $('#contacts').slideDown(300)
+            is_contacts_valid = false
+        }
+        else{
+            $('#contacts').slideUp(300)
+            is_contacts_valid = true
+        }
+    }
+</script>
+{% endblock %}
