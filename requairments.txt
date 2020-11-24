@@ -1,2 +1,0 @@
-pillow и python-thumbnails
-django_dajax
