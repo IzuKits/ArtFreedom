@@ -20,6 +20,7 @@ from main import views
 from loginsys import views as login_views
 from userprofile import views as user_views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -37,7 +38,10 @@ urlpatterns = [
     path("login/", login_views.login, name="login"),
     path("profile/", include("userprofile.urls")),
     path("logout/", login_views.logout, name="logout"),
-    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/imgs/favicon.ico'}),
+    path(
+        'favicon.ico',
+        RedirectView.as_view(url=staticfiles_storage.url('/imgs/favicon.ico'))
+    ),
 ]
 urlpatterns += [
     path('', RedirectView.as_view(url="index/", permanent=True))
