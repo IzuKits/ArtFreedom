@@ -36,7 +36,8 @@ urlpatterns = [
     path("registration/", login_views.registration, name="registration"),
     path("login/", login_views.login, name="login"),
     path("profile/", include("userprofile.urls")),
-    path("logout/", login_views.logout, name="logout")
+    path("logout/", login_views.logout, name="logout"),
+    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/imgs/favicon.ico'}),
 ]
 urlpatterns += [
     path('', RedirectView.as_view(url="index/", permanent=True))
