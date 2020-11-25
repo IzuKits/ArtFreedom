@@ -1,0 +1,16 @@
+form > * {
+    display: block;
+    margin: 1rem;
+    width: 40vw;
+}
+form > label{
+    font-weight: bold;
+}
+
+form {
+    display: inline-block;
+    margin-left: 20vw;
+}
+
+main{
+}

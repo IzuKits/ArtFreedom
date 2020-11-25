@@ -19,7 +19,6 @@ from django.views.generic import RedirectView
 from main import views
 from loginsys import views as login_views
 from userprofile import views as user_views
-from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from django.conf import settings

@@ -1,0 +1,42 @@
+main{
+    display: flex;
+    align-items: flex-start;
+}
+
+nav.nav-left-bar{
+    width: 15%;
+    padding: 1rem;
+    border-right: 1px rgb(7, 36, 27) solid;
+} 
+nav.nav-left-bar > ul > li{
+    list-style-type: none;
+}
+nav.nav-left-bar > ul{
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.main-block{
+    flex-grow: 1;
+    padding: 1rem;
+}
+.nav-left-bar-button{
+    display: block;
+    color: black;
+    padding: 0.5rem;
+    text-decoration: none;
+    border: 1px rgba(0, 0, 0, 0) solid;
+}
+.nav-left-bar-button:hover{
+    border: 1px rgb(0, 0, 0) solid;
+}
+.nav-left-bar-button:active{
+    color: black;
+}
+
+/* Text effects */
+
+h2.heading2{
+    color:rgb(14, 63, 42);
+    border-bottom: 1px black solid;
+}

@@ -45,8 +45,6 @@ INSTALLED_APPS = [
     "main.apps.MainConfig",
     "loginsys.apps.LoginsysConfig",
     "userprofile.apps.UserprofileConfig",
-    'dajax',
-    'dajaxice',
 ]
 
 MIDDLEWARE = [
@@ -140,7 +138,6 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
 STATICFILES_FINDERS = (
    'django.contrib.staticfiles.finders.FileSystemFinder',
    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-   'dajaxice.finders.DajaxiceFinder',
 )
 
 DAJAXICE_MEDIA_PREFIX = 'dajaxice'
