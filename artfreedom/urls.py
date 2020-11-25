@@ -23,8 +23,11 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 from django.conf import settings
+from django.urls import include, re_path
+
 from django.conf.urls.static import static
 from django.conf.urls import url
+from django.views.static import serve
 
 urlpatterns = [
     path("catalog/", include("main.urls")),
@@ -42,6 +45,8 @@ urlpatterns = [
         'favicon.ico',
         RedirectView.as_view(url=staticfiles_storage.url('/imgs/favicon.ico'))
     ),
+    re_path(r'^static/(?P<path>.*)$', serve,
+            {'document_root': settings.STATIC_ROOT}),
 ]
 urlpatterns += [
     path('', RedirectView.as_view(url="index/", permanent=True))

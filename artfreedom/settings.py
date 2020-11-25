@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import sys, os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,8 +29,8 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "apps"))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'w2egfmr9@cjaj#ydbyg+u9dw^7ayczhfeyva2e6fzy^pfeo#9b')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
-
+#DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
+DEBUG=False
 ALLOWED_HOSTS = ['artfreedomm.herokuapp.com', '127.0.0.1']
 
 
