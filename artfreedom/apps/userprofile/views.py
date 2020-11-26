@@ -21,21 +21,26 @@ def myprofile(request):
 
         args['col_challenges'] = userdata.challenge_to_user_set.count()
         #args['challenges'] = userdata.challenge_to_user_set.all()
-        chs = userdata.challenge_to_user_set.all()
-        args['challenges'] = []
-        for c in chs:
-            args['challenges'].append({
-                "challenge":c.challenge,
-                "active":c.challenge.is_challenge_active()
-                })
+        challenges = get_challenges_set(userdata)
+        args['challenges'] = challenges
+
         args['ismyprofile'] = True
-        form = newImage()
-        args['avatar_form'] = form
 
-        if userdata.avatar:
-            args['avatar_url'] = userdata.avatar.image.url
-
+        if userdata.avatar != "":
+            args['avatar_url'] = userdata.avatar
+        
     return render(request, "userprofile/profile.html", args)
+
+def get_challenges_set(userdata):
+        chs = userdata.challenge_to_user_set.all()
+        res = []
+        for c in chs:
+            res.append({
+            "challenge":c.challenge,
+            "active":c.challenge.is_challenge_active()
+            })
+        return res
+
 
 def profile(request, userid):
     args = {}
@@ -48,11 +53,11 @@ def profile(request, userid):
     args['status'] = userdata.status
     args['contacts'] = userdata.contacts
     args['col_challenges'] = userdata.challenge_to_user_set.count()
-    args['challenges'] = userdata.challenge_to_user_set.all()
+    args['challenges'] = get_challenges_set(userdata)
 
 
-    if userdata.avatar:
-        args['avatar_url'] = userdata.avatar.image.url
+    if userdata.avatar != "":
+        args['avatar_url'] = userdata.avatar
     args['ismyprofile'] = request.user.id == userid
 
     return render(request, "userprofile/profile.html", args)
@@ -67,7 +72,7 @@ def add_new_challenge(request):
         start_date=start_date,
         recruitment_time=request.POST['recruitment_time'])
         challenge.pub_date = datetime.now()
-        form = newImage(request.POST, request.FILES)
+        """form = newImage(request.POST, request.FILES)
 
         if form.is_valid():
             print("valid")
@@ -79,6 +84,7 @@ def add_new_challenge(request):
             default = Image.objects.get(image="images/1/image_izukits_21.jpg")
             challenge.avatar = default
             print("invalid")
+        """
         challenge.save()
         ch_ = Challenge_to_User(user=request.user.user_data,
             challenge=challenge, role='creator')
@@ -86,8 +92,7 @@ def add_new_challenge(request):
 
         return HttpResponseRedirect("/profile")
     else:
-        model = newImage()
-        return render(request, "userprofile/newchallenge.html", {'model': model})
+        return render(request, "userprofile/newchallenge.html")
 
 class NewChallengeForm(ModelForm):
     class Meta:

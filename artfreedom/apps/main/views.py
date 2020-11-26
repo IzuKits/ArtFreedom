@@ -27,8 +27,8 @@ def catalog(request):
                 'challenge_status_en':get_challenge_status(ch).name,
             }
 
-            if ch.avatar:
-                dic['avatar'] = ch.avatar.image.url
+            if ch.avatar != "":
+                dic['avatar'] = ch.avatar
             latest_challenges_list.append(dic)
 
     except:
@@ -75,7 +75,7 @@ def challenge(request, id):
     args['creator'] = ch.challenge_to_user_set.get(role='creator').user
     args['title'] = ch.article_title
     args['description'] = ch.article_description
-    args['avatar_url'] = ch.avatar.image.url
+    args['avatar_url'] = ch.avatar
     args['participants'] = ch.challenge_to_user_set.all()
     args['challenge_status'] = get_challenge_status(ch).value
     args['challenge_status_en'] = get_challenge_status(ch).name

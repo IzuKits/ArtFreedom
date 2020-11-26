@@ -9,7 +9,7 @@
 {% block main_content %}
 <main>
     <nav class="nav-left-bar">
-    {% if user.is_athenticated %}
+    {% if user.is_authenticated %}
         {% if challenge_status == 'Идет набор'%}
             <figure id="participate_button">
                 {% if isparticipated %}
@@ -32,7 +32,13 @@
 
     </nav>
     <section class="main-block">
-        <div class="challenge__img"><img src="{{avatar_url}}" alt="art"></div>
+        <div class="challenge__img"><img src="
+            {% if avatar_url %}
+                {{avatar_url}}
+            {% else %}
+                https://img5.goodfon.com/wallpaper/nbig/4/27/anime-art-kakegurui-devushka-vzgliad-karty.jpg
+            {% endif %}
+        " alt="art"></div>
         <h2 class="heading2" style="display: inline-block;">{{title}}</h2>
         <p>Дата регистрации: {{pub_date}}</p>
         <p>Дата начала: {{start_date}}</p>
@@ -58,7 +64,7 @@
     add_button = document.getElementById("participate_button")
     console.log(document)
     add_button.onclick = function(){
-        result = confirm("Подтвердить участие в выбранном челлендже? (ОТменить действие будет невозможно)")
+        result = confirm("Подтвердить участие в выбранном челлендже? (Отменить действие будет невозможно)")
         if (result){
             $.ajax({
                 type: "GET",

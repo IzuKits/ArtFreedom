@@ -13,7 +13,13 @@
     </nav>
     <section>
         {% for ch in latest_challenges_list%}
-        <article class="challenge_article" {% if  ch.avatar %} style="background-image: url('{{ ch.avatar }}');"
+        <article class="challenge_article" {% if  ch.avatar %} style="background-image: url('
+            {% if avatar_url%}
+                {{avatar_url}}
+            {% else %}
+                https://img5.goodfon.com/wallpaper/nbig/4/27/anime-art-kakegurui-devushka-vzgliad-karty.jpg
+            {% endif %}
+        ');"
             {% endif %}>
             <header><a href="{% url 'challenge' ch.id %}">{{ ch.name }}</a> </header>
             <article>
