@@ -45,7 +45,7 @@ class User_data(models.Model):
 
     status = models.CharField("статус пользователя", max_length=500, blank=True)
     contacts = models.CharField("контакты пользователя", max_length=200)
-    avatar = models.CharField("Аватар", blank=True, max_length=2500, default="")
+    avatar = models.CharField("Аватар", blank=True, max_length=2500, default="", null=True)
 
     #challenges = models.ForeignKey('Challenge_to_User', null=True, on_delete=models.SET_NULL, blank=True)
 
@@ -63,7 +63,7 @@ class Challenge_article(models.Model):
     start_date = models.DateTimeField("дата начала", default=datetime.now())
     recruitment_time = models.IntegerField("время челледжа (в днях)")  # in days
 
-    avatar = models.CharField("Аватар", blank=True, max_length=2500, default="")
+    avatar = models.CharField("Аватар", blank=True, max_length=2500, default="", null=True)
     #users = models.ForeignKey('Challenge_to_User', null=True, on_delete=models.SET_NULL, blank=True)
 
     #participants = models.ManyToManyField(User_data)
