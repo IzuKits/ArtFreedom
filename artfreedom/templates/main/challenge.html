@@ -47,7 +47,7 @@
         <p>Организатор: <a href="{% url 'userprofile:profile' creator.user.id %}"> {{creator.user.username}}</a></p>
         <p>Участники:
             {% for i in participants%}
-                <a href="{% url 'userprofile:profile' creator.user.id %}">{{i.user.user.username}}, </a>
+                <a href="{% url 'userprofile:profile' i.user.user.id %}">{{i.user.user.username}}, </a>
             {% endfor %}
         </p>
         <p>Описание: {{description}}</p>
