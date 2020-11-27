@@ -35,3 +35,20 @@ a.header_button:hover{
     background-color: rgb(5, 46, 37);
     transition-duration: 200ms;
 }
+.submit_button{
+    background-color: rgb(14, 63, 42);
+    border-radius: 0.5rem;
+    margin: 1rem;
+    padding: 0.7rem;
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    border: 1px rgba(14, 63, 42, 0) solid;
+}
+.submit_button:hover{
+    background-color: white;
+    border: 1px rgb(14, 63, 42) solid;
+    color: black;
+    transition-duration: 200ms;
+    cursor: pointer;
+}

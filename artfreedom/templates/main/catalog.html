@@ -6,20 +6,34 @@
 {% block main_content %}
 <main>
     <nav>
-        <a href="#">chotot</a>
-        <a href="#">chototo2</a>
-        <a href="#">chototo3</a>
-        <a href="#">chototo4</a>
+        <p>Сортировать каталог</p>
+        <form action="{% url 'main:catalog' %}" method="GET">
+        {% csrf_token %} 
+        <fieldset>
+            <legend>Статус челленджa</legend>
+            {{ filter_form.status1 }}
+            {{ filter_form.status1.label_tag }}
+            <br/>
+            {{ filter_form.status2 }}
+            {{ filter_form.status2.label_tag }}
+            <br/>
+            {{ filter_form.status3 }}
+            {{ filter_form.status3.label_tag }}
+        </fieldset>
+        <fieldset id="duration">
+            <legend>Длительность</legend>
+            От {{ filter_form.duration_min }} до {{ filter_form.duration_max }} дней
+        </fieldset>
+        <button type="submt" class="submit_button">Сортировать</button>
+        </form>
     </nav>
     <section>
         {% for ch in latest_challenges_list%}
-        <article class="challenge_article" {% if  ch.avatar %} style="background-image: url('
-            {% if avatar_url%}
-                {{avatar_url}}
+        <article class="challenge_article" style=
+            {% if ch.avatar_url%}
+                "background-image: url('{{ch.avatar_url}}')"
             {% else %}
-                https://img5.goodfon.com/wallpaper/nbig/4/27/anime-art-kakegurui-devushka-vzgliad-karty.jpg
-            {% endif %}
-        ');"
+                "background-image: url('https://img5.goodfon.com/wallpaper/nbig/4/27/anime-art-kakegurui-devushka-vzgliad-karty.jpg')"
             {% endif %}>
             <header><a href="{% url 'challenge' ch.id %}">{{ ch.name }}</a> </header>
             <article>
@@ -70,6 +84,21 @@
     }
     document.getElementById("last").onclick = function () {
         document.location.href = loc + '?page=' + last_page
+    }
+
+
+
+    min_duration = $("#duration input")[0]
+    max_duration = $("#duration input")[1]
+    $("#duration input").bind("keyup mouseup", check_duration_inputs)
+
+    function check_duration_inputs(){
+        if (min_duration.value === "" || max_duration.value === ""){
+            return
+        }
+        if (min_duration.value > max_duration.value){
+            max_duration.value = min_duration.value
+        }
     }
 </script>
 {% endblock %}

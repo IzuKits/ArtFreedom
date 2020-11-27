@@ -5,42 +5,60 @@ from django.contrib import auth
 from django.utils import timezone
 from enum import Enum, auto
 from math import ceil
+from .forms import ChallengesFilterForm
+
 
 def catalog(request):
-    latest_challenges_list = []#Challenge_article.objects.order_by("-pub_date")[:5]
-    if request.GET:
-        page = request.GET['page']
+    latest_challenges_list = []  # Challenge_article.objects.order_by("-pub_date")[:5]
+    if request.GET.get("page", False):
+        page = request.GET["page"]
     else:
         page = 1
     try:
         items_on_page = 3
-        challenges = Challenge_article.objects.order_by("-pub_date")[(int(page) - 1) * items_on_page:items_on_page * int(page)]
+        challenges = Challenge_article.objects.order_by("-pub_date")[
+            (int(page) - 1) * items_on_page : items_on_page * int(page)
+        ]
         max_page = ceil(Challenge_article.objects.count() / items_on_page)
         for ch in challenges:
             dic = {
-                'name':ch.article_title,
-                'start_date':ch.start_date,
-                'recruitment_time':ch.recruitment_time,
-                'users_count':Challenge_to_User.objects.filter(challenge=ch).count(),
-                'id':ch.id,
-                'challenge_status':get_challenge_status(ch).value,
-                'challenge_status_en':get_challenge_status(ch).name,
+                "name": ch.article_title,
+                "start_date": ch.start_date,
+                "recruitment_time": ch.recruitment_time,
+                "users_count": Challenge_to_User.objects.filter(challenge=ch).count(),
+                "id": ch.id,
+                "challenge_status": get_challenge_status(ch).value,
+                "challenge_status_en": get_challenge_status(ch).name,
             }
 
             if ch.avatar != "":
-                dic['avatar'] = ch.avatar
+                dic["avatar_url"] = ch.avatar
             latest_challenges_list.append(dic)
 
     except:
         raise Http404("Страница не найдена")
 
-    #challanges = 
-    return render(request, "main/catalog.html",{
-        "latest_challenges_list":latest_challenges_list,
-            'page': {
-                "current_page":page,
-                "last_page":max_page,
-            },})
+    form_filter = ChallengesFilterForm(request.GET)
+    if form_filter.is_valid():
+        print("valid")
+
+    return render(
+        request,
+        "main/catalog.html",
+        {
+            "latest_challenges_list": latest_challenges_list,
+            "page": {
+                "current_page": page,
+                "last_page": max_page,
+            },
+            "filter_form": ChallengesFilterForm(),
+        },
+    )
+
+
+def filter_catalog(request):
+    pass
+
 
 def participate(request):
     id = request.GET["challenge"]
@@ -52,52 +70,55 @@ def participate(request):
 
     return HttpResponse(request.GET["challenge"])
 
+
 def index(request):
-    return render(request, "main/index.html")
+    count = Challenge_article.objects.count()
+    return render(request, "main/index.html", {'challenges_count':count})
+
 
 def helper(request):
     return render(request, "main/help.html")
-    
-    
+
+
 def detail(request, challenge_article_id):
     try:
-        a = Challenge_article.objects.get(id = challenge_article_id)
+        a = Challenge_article.objects.get(id=challenge_article_id)
     except:
         raise Http404("Статья не найдена")
     return render(request, "main/details.html", {"article": a})
 
+
 def challenge(request, id):
     args = {}
     ch = Challenge_article.objects.get(id=id)
-    args['pub_date'] = ch.pub_date
-    args['start_date'] = ch.start_date
-    args['recruitment_time'] = ch.recruitment_time
-    args['creator'] = ch.challenge_to_user_set.get(role='creator').user
-    args['title'] = ch.article_title
-    args['description'] = ch.article_description
-    args['avatar_url'] = ch.avatar
-    args['participants'] = ch.challenge_to_user_set.all()
-    args['challenge_status'] = get_challenge_status(ch).value
-    args['challenge_status_en'] = get_challenge_status(ch).name
-    args['id'] = id
+    args["pub_date"] = ch.pub_date
+    args["start_date"] = ch.start_date
+    args["recruitment_time"] = ch.recruitment_time
+    args["creator"] = ch.challenge_to_user_set.get(role="creator").user
+    args["title"] = ch.article_title
+    args["description"] = ch.article_description
+    args["avatar_url"] = ch.avatar
+    args["participants"] = ch.challenge_to_user_set.all()
+    args["challenge_status"] = get_challenge_status(ch).value
+    args["challenge_status_en"] = get_challenge_status(ch).name
+    args["id"] = id
     if request.user.is_authenticated:
         user = User_data.objects.get(user=request.user)
-        isparticipated = Challenge_to_User.objects.filter(challenge=ch, user_id=user.id).count()
-        args['isparticipated'] =  not (isparticipated == 0)
+        isparticipated = Challenge_to_User.objects.filter(
+            challenge=ch, user_id=user.id
+        ).count()
+        args["isparticipated"] = not (isparticipated == 0)
     else:
-        args['isparticipated'] =  False
-
+        args["isparticipated"] = False
 
     return render(request, "main/challenge.html", args)
 
 
-
-
 def get_challenge_status(challenge):
-    """ if (
-        timezone.now() >= challenge.start_date
-        and (timezone.now() - challenge.start_date).days >= challenge.recruitment_time
-        ):
+    """if (
+    timezone.now() >= challenge.start_date
+    and (timezone.now() - challenge.start_date).days >= challenge.recruitment_time
+    ):
     """
     if (timezone.now() - challenge.start_date).days >= challenge.recruitment_time:
         return ChallengeStatus.finished
@@ -107,9 +128,7 @@ def get_challenge_status(challenge):
         return ChallengeStatus.recruitment
 
 
-class ChallengeStatus (Enum):
+class ChallengeStatus(Enum):
     recruitment = "Идет набор"
     active = "Активный"
     finished = "Завершен"
-
-

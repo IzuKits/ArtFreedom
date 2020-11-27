@@ -131,3 +131,9 @@ div#pagination ul li#last{
 .deactive_page_button:hover{
     background-color: rgba(255, 255, 255, 0) !important;
 }
+
+#duration > input{
+    display: inline-block;
+    width: 3rem;
+    margin: 5px;
+}
