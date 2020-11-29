@@ -64,9 +64,11 @@ class Challenge_article(models.Model):
     recruitment_time = models.IntegerField("время челледжа (в днях)")  # in days
 
     avatar = models.CharField("Аватар", blank=True, max_length=2500, default="", null=True)
+
+
     #users = models.ForeignKey('Challenge_to_User', null=True, on_delete=models.SET_NULL, blank=True)
 
-    #participants = models.ManyToManyField(User_data)
+    participants = models.ManyToManyField(User_data, through="Challenge_to_User")
     #creator = models.ForeignKey(User_data, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):

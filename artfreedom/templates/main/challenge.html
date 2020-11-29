@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Название челленджа{% endblock %}
+{% block title %}{{title}}{% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/challenge.css' %}">
 <link rel="stylesheet" href="{% static 'css/text.css' %}">{% endblock %}
@@ -32,6 +32,12 @@
 
     </nav>
     <section class="main-block">
+        {% if user_role == 'creator'%}
+            <div class="creator_edit_menu">
+                <div id="delete_challenge" class="creator_edit_menu_button">Удалить челлендж</div>
+                <div class="creator_edit_menu_button">Изменить состав участников</div>
+            </div>
+        {% endif %}
         <div class="challenge__img"><img src="
             {% if avatar_url %}
                 {{avatar_url}}
@@ -57,10 +63,8 @@
 {% endblock %}
 
 {% block scripts %}
-
-{% if not isparticipated %}
 <script>
-
+{% if not isparticipated %}
     add_button = document.getElementById("participate_button")
     console.log(document)
     add_button.onclick = function(){
@@ -75,6 +79,28 @@
             });
         }
     };
-</script>
 {% endif %}
+
+$("div.creator_edit_menu_button#delete_challenge").click(
+    function () {
+        result = confirm("Вы уверены, что хотите удалить выбранный челлендж? Отменить это действие будет невозможно.")
+        if (result){
+            $.ajax({
+                type: "POST",
+                url: "/catalog/deletechallenge/",
+                data:{id : "{{ id }}", csrfmiddlewaretoken: getCookie('csrftoken')}
+            }).done(function(msg){
+                location.href("/catalog/")
+            })
+        }
+    }
+)
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+</script>
+
 {% endblock %}

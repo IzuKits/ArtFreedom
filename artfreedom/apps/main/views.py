@@ -53,7 +53,7 @@ def catalog(request):
         ))
     items_on_page = 2
     max_page = ceil(len(latest_challenges_list) / items_on_page)
-    
+
     latest_challenges_list = latest_challenges_list[
             (int(page) - 1) * items_on_page : items_on_page * int(page)
         ]
@@ -85,9 +85,6 @@ def  is_challenge_has_status(recruitment, active, finished):
             return True
     return func
 
-
-def filter_catalog(request):
-    pass
 
 
 def participate(request):
@@ -138,6 +135,9 @@ def challenge(request, id):
             challenge=ch, user_id=user.id
         ).count()
         args["isparticipated"] = not (isparticipated == 0)
+        if isparticipated != 0:
+            args["user_role"] = ch.challenge_to_user_set.get(user=user).role
+
     else:
         args["isparticipated"] = False
 
@@ -157,6 +157,12 @@ def get_challenge_status(challenge):
     else:
         return ChallengeStatus.recruitment
 
+
+def delete_challenge(request):
+    if request.POST:
+        Challenge_article.get(id=request.POST["id"]).challenge_to_user_set.delete()
+    else:
+        return Http404("Страница не найдена")
 
 class ChallengeStatus(Enum):
     recruitment = "Идет набор"
