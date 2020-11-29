@@ -47,3 +47,21 @@ span.finished{
 span.recruitment{
     background-color: chartreuse;
 }
+
+div.creator_edit_menu{
+    display: flex;
+    background-color: rgb(14, 63, 42);
+    color: white;
+    flex-direction: row-reverse;
+}
+.creator_edit_menu_button{
+    padding: 0.5rem;
+    display: inline-block;
+    border-left: 1px solid white;
+}
+.creator_edit_menu_button:hover{
+    color: black;
+    background-color: white;
+    transition-duration: 300ms;
+    cursor: pointer;
+}
