@@ -90,7 +90,7 @@ $("div.creator_edit_menu_button#delete_challenge").click(
                 url: "/catalog/deletechallenge/",
                 data:{id : "{{ id }}", csrfmiddlewaretoken: getCookie('csrftoken')}
             }).done(function(msg){
-                location.href("/catalog/")
+                location.href = ("/catalog/")
             })
         }
     }

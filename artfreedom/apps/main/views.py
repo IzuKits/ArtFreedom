@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Challenge_article, Comment, Challenge_to_User, User_data
-from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.http import Http404, HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.contrib import auth
 from django.utils import timezone
 from enum import Enum, auto
@@ -43,7 +43,7 @@ def catalog(request):
             latest_challenges_list.append(dic)
 
     except Exception as e:
-        raise Http404(e)
+        return HttpResponseNotFound()
 
     if form_filter.is_status_filter_empty():
         latest_challenges_list = list(filter(
@@ -111,13 +111,16 @@ def detail(request, challenge_article_id):
     try:
         a = Challenge_article.objects.get(id=challenge_article_id)
     except:
-        raise Http404("Статья не найдена")
+        raise HttpResponseNotFound()
     return render(request, "main/details.html", {"article": a})
 
 
 def challenge(request, id):
     args = {}
-    ch = Challenge_article.objects.get(id=id)
+    try:
+        ch = Challenge_article.objects.get(id=id)
+    except:
+        return HttpResponseNotFound()
     args["pub_date"] = ch.pub_date
     args["start_date"] = ch.start_date
     args["recruitment_time"] = ch.recruitment_time
@@ -160,9 +163,11 @@ def get_challenge_status(challenge):
 
 def delete_challenge(request):
     if request.POST:
-        Challenge_article.get(id=request.POST["id"]).challenge_to_user_set.delete()
+        Challenge_article.objects.get(id=request.POST["id"]).challenge_to_user_set.all().delete()
+        Challenge_article.objects.get(id=request.POST["id"]).delete()
+        return redirect('/catalog/')
     else:
-        return Http404("Страница не найдена")
+        return HttpResponseNotFound()
 
 class ChallengeStatus(Enum):
     recruitment = "Идет набор"

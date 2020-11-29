@@ -33,7 +33,7 @@
         <figcaption>Активные челленджи</figcaption>
         {% for ch in  challenges%}
         {% if ch.active %}
-        <a href='{% url 'challenge' ch.challenge.id %}'>{{ch.challenge}}</a>
+        <a href='{% url 'challenge' ch.challenge.id %}'><img class="creator_challenge_icon" src="https://image.flaticon.com/icons/png/512/91/91202.png">{{ch.challenge}}</a>
         {% endif %}
         {% endfor %}
     </figure>

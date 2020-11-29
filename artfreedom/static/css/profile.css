@@ -89,3 +89,9 @@ a.logout_button:hover{
 #new_avatar_button{
     text-align: center;
 }
+
+.creator_challenge_icon{
+    object-fit: cover;
+    height: 0.8em;
+    padding: 0.1em;
+}
