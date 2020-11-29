@@ -59,7 +59,13 @@
 
 {% block scripts%}
 <script>
-    loc = location.protocol + '//' + location.host + location.pathname
+    loc = location.protocol + '//' + location.host + location.pathname + '?'
+    let params = (new URL(document.location)).searchParams; 
+    params.forEach(function (element, index, array){
+        if (index != 'page' && index != "csrfmiddlewaretoken")
+            loc += index + '=' + element + '&'
+    })
+
     current_page = document.getElementById("current_page").innerHTML
     last_page = document.getElementById("last").innerHTML
 
@@ -68,7 +74,7 @@
     }
     else {
         document.getElementById("prev").onclick = function () {
-            document.location.href = loc + '?page=' + --current_page
+            document.location.href = loc + 'page=' + --current_page
         }
     }
     if (current_page == last_page){
@@ -76,27 +82,27 @@
     }
     else{
         document.getElementById("next").onclick = function () {
-            document.location.href = loc + '?page=' + ++current_page
+            document.location.href = loc + 'page=' + ++current_page
         }
     }
     document.getElementById("first").onclick = function () {
         document.location.href = loc
     }
     document.getElementById("last").onclick = function () {
-        document.location.href = loc + '?page=' + last_page
+        document.location.href = loc + 'page=' + last_page
     }
 
 
 
     min_duration = $("#duration input")[0]
     max_duration = $("#duration input")[1]
-    $("#duration input").bind("keyup mouseup", check_duration_inputs)
+    /*$("#duration input").bind("keyup mouseup", check_duration_inputs)*/
 
     function check_duration_inputs(){
         if (min_duration.value === "" || max_duration.value === ""){
             return
         }
-        if (min_duration.value > max_duration.value){
+        if (parseInt(min_duration.value)  > parseInt(max_duration.value)){
             max_duration.value = min_duration.value
         }
     }

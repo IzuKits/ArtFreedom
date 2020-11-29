@@ -59,7 +59,7 @@ class User_data(models.Model):
 class Challenge_article(models.Model):
     article_title = models.CharField("название челленджа", max_length=200)
     article_description = models.TextField("описание челленджа")
-    pub_date = models.DateTimeField("дата публикации")
+    pub_date = models.DateTimeField("дата публикации") 
     start_date = models.DateTimeField("дата начала", default=datetime.now())
     recruitment_time = models.IntegerField("время челледжа (в днях)")  # in days
 

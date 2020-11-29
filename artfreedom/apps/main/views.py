@@ -15,11 +15,18 @@ def catalog(request):
     else:
         page = 1
     try:
-        items_on_page = 3
-        challenges = Challenge_article.objects.order_by("-pub_date")[
-            (int(page) - 1) * items_on_page : items_on_page * int(page)
-        ]
-        max_page = ceil(Challenge_article.objects.count() / items_on_page)
+        form_filter = ChallengesFilterForm(request.GET)
+        challenges = Challenge_article.objects
+        if form_filter.is_valid():
+            if not form_filter.is_duration_filter_empty():
+                if form_filter.cleaned_data['duration_max'] == None:
+                    challenges = challenges.filter(recruitment_time__gte=form_filter.cleaned_data['duration_min'])
+                else:
+                    start = form_filter.cleaned_data['duration_min']
+                    fin = form_filter.cleaned_data['duration_max']
+                    challenges = challenges.filter(recruitment_time__range=(start, fin))
+
+        challenges = challenges.order_by("-pub_date")
         for ch in challenges:
             dic = {
                 "name": ch.article_title,
@@ -35,12 +42,21 @@ def catalog(request):
                 dic["avatar_url"] = ch.avatar
             latest_challenges_list.append(dic)
 
-    except:
-        raise Http404("Страница не найдена")
+    except Exception as e:
+        raise Http404(e)
 
-    form_filter = ChallengesFilterForm(request.GET)
-    if form_filter.is_valid():
-        print("valid")
+    if form_filter.is_status_filter_empty():
+        latest_challenges_list = list(filter(
+            is_challenge_has_status(form_filter.cleaned_data['status1'],
+            form_filter.cleaned_data['status2'], form_filter.cleaned_data['status3']),
+            latest_challenges_list
+        ))
+    items_on_page = 2
+    max_page = ceil(len(latest_challenges_list) / items_on_page)
+    
+    latest_challenges_list = latest_challenges_list[
+            (int(page) - 1) * items_on_page : items_on_page * int(page)
+        ]
 
     return render(
         request,
@@ -51,9 +67,23 @@ def catalog(request):
                 "current_page": page,
                 "last_page": max_page,
             },
-            "filter_form": ChallengesFilterForm(),
+            "filter_form": form_filter,
         },
     )
+
+def  is_challenge_has_status(recruitment, active, finished):
+    def func (challenge):
+        status = challenge['challenge_status_en']
+        if ((status == 'recruitment') & recruitment):
+            print("recruitment")
+            return True
+        elif ((status == 'active') & active):
+            print("active")
+            return True
+        elif ((status == 'finished') & finished):
+            print("finish")
+            return True
+    return func
 
 
 def filter_catalog(request):
