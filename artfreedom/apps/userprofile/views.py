@@ -37,7 +37,8 @@ def get_challenges_set(userdata):
         for c in chs:
             res.append({
             "challenge":c.challenge,
-            "active":c.challenge.is_challenge_active()
+            "active":c.challenge.is_challenge_active(),
+            "is_creator": True if c.role == "creator" else False ,
             })
         return res
 
@@ -54,7 +55,6 @@ def profile(request, userid):
     args['contacts'] = userdata.contacts
     args['col_challenges'] = userdata.challenge_to_user_set.count()
     args['challenges'] = get_challenges_set(userdata)
-
 
     if userdata.avatar != "":
         args['avatar_url'] = userdata.avatar
