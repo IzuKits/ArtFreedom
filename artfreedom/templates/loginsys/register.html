@@ -8,9 +8,12 @@
         <form action="/registration/" method="POST" id="registration_form">
             {% csrf_token %}
             <label for="id_login">Логин</label>
+            <p class="mini_text"> Только латинские буквы или цифры</p>
             {{form.login}}
             <div id='login_error'>Логин должен содержать только латинские буквы или цифры</div>
             <label for="id_password">Пароль</label>
+            <p class="mini_text"> Только латинские буквы или цифры. Не менее 8 символов</p>
+
             {{form.password}}
             <div id='password_error'></div>
             <label for="id_password2">Повторите пароль</label>
@@ -58,11 +61,9 @@
         is_contacts_valid = true 
 
         if(is_login_valid&&is_password_valid&&is_password2_valid&&is_contacts_valid){
-            alert("true")
             return true
         }
         else{
-            alert("false")
             return false
         }
     }

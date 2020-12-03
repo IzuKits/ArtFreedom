@@ -53,7 +53,7 @@ def catalog(request):
             form_filter.cleaned_data['status2'], form_filter.cleaned_data['status3']),
             latest_challenges_list
         ))
-    items_on_page = 2
+    items_on_page = 8
     max_page = ceil(len(latest_challenges_list) / items_on_page)
 
     latest_challenges_list = latest_challenges_list[
