@@ -156,3 +156,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # The URL to use when referring to static files (where they will be served from)
 STATIC_URL = '/static/'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

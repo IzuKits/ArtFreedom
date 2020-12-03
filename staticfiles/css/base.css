@@ -52,3 +52,43 @@ a.header_button:hover{
     transition-duration: 200ms;
     cursor: pointer;
 }
+
+ul.messages{
+    position: fixed;
+    padding: 0px;
+    bottom: 0;
+    left: 0;
+}
+li.message{
+    display: block;
+    list-style-type: none;
+    border-radius: 1rem;
+    width: calc(100vw - 4rem);
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.message.error{
+    background-color: rgba(255, 137, 137, 0.747);
+    border: 1px rgb(151, 0, 0) solid;
+}
+
+.message.success{
+    background-color: rgba(207, 255, 152, 0.678);
+    border: 1px rgb(93, 151, 0) solid;
+}
+
+footer{
+    margin-top: 2rem;
+    background-color: rgb(14, 63, 42);
+    width: calc(100% - 4rem);
+    padding: 2rem;
+    color: white;
+}
+footer a{
+    color: white;
+}
+
+main{
+    padding-bottom: 0px !important;
+}

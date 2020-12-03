@@ -6,8 +6,9 @@
 <link rel="stylesheet" href="{% static 'css/text.css' %}">
 {% endblock %}
 {% block main_content %}
-{% if username %}
 <main class="profile">
+
+{% if username %}
 
     <div class="avatar">
         <img src="{% if avatar_url %}
@@ -59,8 +60,8 @@
             <a href="{% url 'login' %}" class="logout_button">Залогиниться</a>
         </section>
     </main>
-</main>
 {% endif %}
+</main>
 
 {% endblock %}
 

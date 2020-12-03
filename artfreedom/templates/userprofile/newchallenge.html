@@ -18,7 +18,7 @@
         <label for="id_start_date">Дата начала челленджа</label>
         <input type="date" min={% now 'Y-m-d' %} name="start_date"required id="id_start_date">
         <label for="id_recruitment_time">Длительность конкурса (в днях)</label>
-        <input type="number" name="recruitment_time" min=1 required id="id_recruitment_time">
+        <input type="number" name="recruitment_time" min=1 required id="id_recruitment_time" max=100>
         <button type="submit">Создать</button>
     </form>
 </main>

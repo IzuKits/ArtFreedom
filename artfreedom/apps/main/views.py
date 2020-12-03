@@ -6,6 +6,8 @@ from django.utils import timezone
 from enum import Enum, auto
 from math import ceil
 from .forms import ChallengesFilterForm
+from django.contrib import messages
+
 
 
 def catalog(request):
@@ -57,7 +59,6 @@ def catalog(request):
     latest_challenges_list = latest_challenges_list[
             (int(page) - 1) * items_on_page : items_on_page * int(page)
         ]
-
     return render(
         request,
         "main/catalog.html",

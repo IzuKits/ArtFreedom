@@ -6,6 +6,8 @@ from django.forms import ModelForm
 from main.models import Challenge_article, Challenge_to_User, User_data, Image
 from django.utils.timezone import datetime
 from django import forms
+from django.contrib import messages
+
 
 
 # Create your views here.
@@ -28,6 +30,10 @@ def myprofile(request):
 
         if userdata.avatar != "":
             args['avatar_url'] = userdata.avatar
+    else:
+        return Http404()
+
+
         
     return render(request, "userprofile/profile.html", args)
 
@@ -60,6 +66,7 @@ def profile(request, userid):
         args['avatar_url'] = userdata.avatar
     args['ismyprofile'] = request.user.id == userid
 
+
     return render(request, "userprofile/profile.html", args)
 
 def add_new_challenge(request):
@@ -89,7 +96,7 @@ def add_new_challenge(request):
         ch_ = Challenge_to_User(user=request.user.user_data,
             challenge=challenge, role='creator')
         ch_.save()
-
+        messages.success(request, "Челлендж успешно добавлен")
         return HttpResponseRedirect("/profile")
     else:
         return render(request, "userprofile/newchallenge.html")

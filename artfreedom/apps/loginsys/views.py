@@ -3,6 +3,8 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.contrib import auth
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib import messages
+
 import re
 from main.models import User_data
 
@@ -22,7 +24,12 @@ def registration(request):
             userdata = User_data(user=user, contacts=form.cleaned_data['contact'])
             userdata.save()
 
-        return HttpResponseRedirect("/login/")
+        else:
+            messages.error(request, "Ошибка регистрации. Проверьте введенные дынные")
+            HttpResponseRedirect("/registration/", status=422)
+        
+        messages.add_message(request, messages.SUCCESS, 'Регистрация прошла успешно')
+        return HttpResponseRedirect("/login/", )
     else:
         form = UserRegistrationForm()
         return render(request, "loginsys/register.html", {'form': form})

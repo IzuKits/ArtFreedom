@@ -19,7 +19,21 @@
         </nav></header>
         {% block main_content %}ERROR{% endblock %}
 
+    <footer>
+        <p> Администратор: <a href="mailto:shitikovaliza23@gmail.com">Shytikova Yelyzaveta</a></p>
+    </footer>
+        {% block scripts %}{% endblock %}
+
+        {% if messages%}
+            <ul class="messages">
+                {% for message in messages%}
+                <li class='message {{message.tags}}'>
+                    {{message}}
+                </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </body>
-    {% block scripts %}{% endblock %}
+
 </html>
 
