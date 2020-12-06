@@ -28,6 +28,7 @@ from django.urls import include, re_path
 from django.conf.urls.static import static
 from django.conf.urls import url
 from django.views.static import serve
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path("catalog/", include("main.urls")),
@@ -48,6 +49,10 @@ urlpatterns = [
     path("kickuser/", views.kick_user, name='kick_user'),
     re_path(r'^static/(?P<path>.*)$', serve,
             {'document_root': settings.STATIC_ROOT}),
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
 ]
 urlpatterns += [
     path('', RedirectView.as_view(url="index/", permanent=True))

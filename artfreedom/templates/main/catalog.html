@@ -2,6 +2,12 @@
 {% load static %}
 {% block title %}Каталог челленджей{% endblock %}
 {% block styles %}
+
+{% block metas %}
+    <meta name='description' content='Каталог, список размещенных на сайте челленджей'>
+    <meta name='Keywords' content='челледж, конкурс, арт'>
+{% endblock %}
+
 <link rel="stylesheet" href="{% static 'css/catalog.css' %}">{% endblock %}
 {% block main_content %}
 <main>
