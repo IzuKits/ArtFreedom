@@ -95,3 +95,7 @@ a.logout_button:hover{
     height: 0.8em;
     padding: 0.1em;
 }
+
+.challenges_gallary > a.banned{
+    background-color: rgb(255, 172, 172);
+}

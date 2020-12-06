@@ -82,7 +82,7 @@ class Challenge_article(models.Model):
     
     class Meta:
         verbose_name = "Челлендж"
-        verbose_name_plural = "Челленджи"
+        verbose_name_plural = "Челленджи" 
 
 class Challenge_to_User(models.Model):
     challenge = models.ForeignKey(Challenge_article, null=True, on_delete=models.SET_NULL)
@@ -90,7 +90,8 @@ class Challenge_to_User(models.Model):
 
     role = models.CharField(max_length=50, choices=[
                                                 ('creator', 'creator'),
-                                                ('participant', 'participant')
+                                                ('participant', 'participant'),
+                                                ('banned', 'banned'),
                                                 ])
 
 

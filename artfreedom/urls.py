@@ -45,6 +45,7 @@ urlpatterns = [
         'favicon.ico',
         RedirectView.as_view(url=staticfiles_storage.url('/imgs/favicon.ico'))
     ),
+    path("kickuser/", views.kick_user, name='kick_user'),
     re_path(r'^static/(?P<path>.*)$', serve,
             {'document_root': settings.STATIC_ROOT}),
 ]

@@ -92,3 +92,8 @@ footer a{
 main{
     padding-bottom: 0px !important;
 }
+
+.form_wrapper > form > p.mini_text{
+    font-size: 0.7rem;
+    color:  rgb(14, 63, 42);;
+}

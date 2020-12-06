@@ -4,6 +4,7 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse, HttpRespons
 from django.contrib import auth
 from django.utils import timezone
 from enum import Enum, auto
+from django.contrib.auth.models import User
 from math import ceil
 from .forms import ChallengesFilterForm
 from django.contrib import messages
@@ -137,10 +138,17 @@ def challenge(request, id):
         user = User_data.objects.get(user=request.user)
         isparticipated = Challenge_to_User.objects.filter(
             challenge=ch, user_id=user.id
-        ).count()
-        args["isparticipated"] = not (isparticipated == 0)
-        if isparticipated != 0:
+        ).all()
+        if isparticipated.count() == 0 :
+            args["isparticipated"] = False
+        elif isparticipated[0].role == 'banned':
+            args["isparticipated"] = 'banned'
+        else:
+            args["isparticipated"] = True
+        
+        if isparticipated.count() != 0:
             args["user_role"] = ch.challenge_to_user_set.get(user=user).role
+
 
     else:
         args["isparticipated"] = False
@@ -169,6 +177,26 @@ def delete_challenge(request):
         return redirect('/catalog/')
     else:
         return HttpResponseNotFound()
+
+def kick_user(request):
+    if request.POST:
+        challenge = Challenge_article.objects.get(id=request.POST['challengeid'])
+        connector = request.user.user_data.challenge_to_user_set.get(challenge=challenge)
+        if (
+            (connector.role == "creator") &
+            (connector.user == request.user.user_data) &
+            (connector.challenge == challenge)
+        ):
+            user_for_kick = User_data.objects.get(user=request.POST['userid'])
+            connector_user = challenge.challenge_to_user_set.get(user=user_for_kick)
+            connector_user.role = 'banned'
+            connector_user.save()
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=401)
+
+    return HttpResponse(status=500)
+
 
 class ChallengeStatus(Enum):
     recruitment = "Идет набор"

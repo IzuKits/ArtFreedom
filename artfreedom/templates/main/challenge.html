@@ -12,10 +12,12 @@
     {% if user.is_authenticated %}
         {% if challenge_status == 'Идет набор'%}
             <figure id="participate_button">
-                {% if isparticipated %}
+                {% if isparticipated == True %}
                 <div class="select_challenge_button">
                     <img src="{% static 'imgs/participate_ok.png' %}" alt="">
                 </div>
+                {% elif isparticipated == 'banned' %}
+                    <p> Организатор запретил вам участие в этом челлендже </p>
                 {% else %}
                 <div class="select_challenge_button">
                     <img src="{% static 'imgs/participate.svg' %}" alt="">
@@ -31,10 +33,11 @@
     {% endif %}
 
     </nav>
-    <section class="main-block">
+    <section class="main-block"> 
         {% if user_role == 'creator'%}
             <div class="creator_edit_menu">
                 <div id="delete_challenge" class="creator_edit_menu_button">Удалить челлендж</div>
+                <div id="edit_users" class="creator_edit_menu_button">Управление участниками</div>
             </div>
         {% endif %}
         <div class="challenge__img"><img src="
@@ -52,11 +55,35 @@
         <p>Организатор: <a href="{% url 'userprofile:profile' creator.user.id %}"> {{creator.user.username}}</a></p>
         <p>Участники:
             {% for i in participants%}
-                <a href="{% url 'userprofile:profile' i.user.user.id %}">{{i.user.user.username}}, </a>
+                {% if i.role != 'banned' %}
+                    <a href="{% url 'userprofile:profile' i.user.user.id %}">{{i.user.user.username}}, </a>
+                {% endif %}
             {% endfor %}
         </p>
         <p>Описание: {{description}}</p>
+        {% if user_role == 'creator'%}
+        <section class='users_table'>
+            <header>Участники</header>
+            {% for i in participants %}
+                {% if i.role == 'participant'%}
+                <div class="users_table_item">
+                    <p>{{i.user.user.username}}</p>
+                    <img title="Удалить полльзователя и заблокировать его" class="delete_button" id='{{i.user.id}}' src="http://s1.iconbird.com/ico/2013/3/637/w128h128139396832524.png">
+                </div>
+                {% endif %}
+            {% endfor %}
+            <header>Заблокированные пользователи</header>
+            {% for i in participants %}
+                {% if i.role == 'banned' %}
+                <div class="users_table_item">
+                    <p>{{i.user.user.username}}</p>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+        {% endif %}
     </section>
+
 </main>
 
 {% endblock %}
@@ -100,6 +127,31 @@ function getCookie(name) {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
+
+
+$('#edit_users').click(function(){
+    $('.users_table').slideToggle({
+        easing: 'swing',
+        duration: 300,
+    }) 
+})
+
+$('.delete_button').click(function(){
+    res = confirm('Вы уверены что хотите заблокировать выбранного пользователя для этого челленджа?')
+    if (res) {
+        $.ajax({
+            type: "POST",
+            url:"/kickuser/",
+            data: {
+                userid: $(this).attr("id"),
+                challengeid: {{ id }},
+                csrfmiddlewaretoken: getCookie('csrftoken'),
+            }
+        }).done(function() {
+            location.reload()
+        })
+    }
+})
 </script>
 
 {% endblock %}

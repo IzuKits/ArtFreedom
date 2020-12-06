@@ -44,7 +44,7 @@ def get_challenges_set(userdata):
             res.append({
             "challenge":c.challenge,
             "active":c.challenge.is_challenge_active(),
-            "is_creator": True if c.role == "creator" else False ,
+            "role": c.role,
             })
         return res
 
